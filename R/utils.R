@@ -178,6 +178,7 @@ Boot4Eigs <- function(data,
   return(return.list)
 }  # End of function Boot4Eigs
 
+
 #' PlotScreeWithCI ----
 #' plot the scree for the eigenvalues
 #' of an SVD based multivariate analysis,
@@ -325,7 +326,6 @@ PlotScreeWithCI <- function(ev,
   mtext("Inertia Extracted by the Components", side = 4, line = 3)
   axis(4)
 } # end of function
-
 
 
 

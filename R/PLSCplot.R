@@ -219,7 +219,7 @@ PLSCplot <- function(
       color4bar = color.tab$oc[[1]],
       color4ns = "gray75",
       plotnames = TRUE,
-      main = paste0("Important Contributions – ", tab1.name, ": LV", leDim[1]),
+      main = paste0("Important Contributions - ", tab1.name, ": LV", leDim[1]),
       ylab = "Signed Contributions")
   ##### Ctr K-set ----
   Fj   <- res$TExPosition.Data$fj
@@ -233,7 +233,7 @@ PLSCplot <- function(
       color4bar = color.tab$oc[[2]],
       color4ns = "gray75",
       plotnames = TRUE,
-      main = paste0("Important Contributions – ", tab2.name, ": LV", leDim[2]),
+      main = paste0("Important Contributions - ", tab2.name, ": LV", leDim[2]),
       ylab = "Signed Contributions")
 
   ##_________________________________________________

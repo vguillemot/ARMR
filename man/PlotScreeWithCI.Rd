@@ -79,9 +79,6 @@ line
 \item{lwd4Kaiser}{lwd value (i.e., width)
 for Kaiser's criterion line.
 (default is \code{'2.5'})}
-
-\item{xlab}{The names of the dimensions
-(default \code{'Dimensions '}).}
 }
 \description{
 \code{PlotScreeWithCI}: Plot the scree for the eigenvalues

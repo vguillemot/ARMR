@@ -139,10 +139,9 @@ Default: 1.5}
 \item{title4pptx}{Title of the PPTX, Default:
 'PCA Results'.}
 
-\item{inferences}{Run inferences
-from \code{InPosition}
-Remains to be done,
-Default is \code{FALSE}.}
+\item{niter.boot}{Number of bootstrap samples to run. Default: 100}
+
+\item{niter.perm}{Number of permutations to run. Default: 100}
 }
 \value{
 A list made of two lists

@@ -236,8 +236,6 @@ Boot4Eigs <- function(data,
 #' @param title a title for the graph
 #' default is
 #' \code{"Explained Variance per Dimension"}.
-#' @param xlab The names of the dimensions
-#' (default \code{'Dimensions '}).
 #' @param plotKaiser  when \code{TRUE}
 #' plot a line corresponding to the average inertia
 #' (Kaiser criterion); do not plot when

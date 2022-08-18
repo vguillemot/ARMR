@@ -78,10 +78,8 @@
 #' the components with eigenvalue larger than 1").
 #' @param biplot De we want to create biplots
 #'  (Default: \code{FALSE})?
-#' @param inferences Run inferences
-#'  from \code{InPosition}
-#'  Remains to be done,
-#'  Default is \code{FALSE}.
+#' @param niter.boot Number of bootstrap samples to run. Default: 100
+#' @param niter.perm Number of permutations to run. Default: 100
 #' @param save2pptx  Default: FALSE
 #' @param title4pptx Title of the PPTX, Default:
 #' 'PCA Results'.

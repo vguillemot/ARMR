@@ -206,6 +206,4 @@ if(interactive()){
 }
 \author{
 Hervé Abdi
-
-Hervé Abdi
 }

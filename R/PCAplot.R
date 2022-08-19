@@ -442,6 +442,7 @@ PCAplot <- function(
             cos4I,
             col.points = col4I,
             col.labels = col4I,
+            display.labels = display.labels.ind,
             constraints = list(
                 minx = -1,
                 miny = -1,
@@ -601,7 +602,7 @@ PCAplot <- function(
         addCoefasPercent	= TRUE,
         # Add coefficient of correlation
         tl.srt = 45,
-        number.font = 2*(10/ncol(Smat)),
+        number.font = (10/ncol(Smat)),
         #Text label color and rotation
         # Combine with significance
         #p.mat = p.mat,
@@ -636,7 +637,7 @@ PCAplot <- function(
         addCoefasPercent	= TRUE,
         # Add coefficient of correlation
         tl.srt = 45,
-        number.font = 2*(10/ncol(Rmat)),
+        number.font = (10/ncol(Rmat)),
         #Text label color and rotation
         # Combine with significance
         #p.mat = p.mat,
@@ -777,7 +778,7 @@ PCAplot <- function(
     if (nvar < 10){
       font.size.ctr <- 5
     }else {
-      font.size.ctr = 5-(round((nind-10)/10)-1)
+      font.size.ctr = 5-(round((nvar-10)/10)-1)
     }
 
     ctrJ1 <-
@@ -909,9 +910,6 @@ PCAplot <- function(
     ## graphs ----
     results.graphs <- list(
         # cor and cov mat here
-        rawData = a001.heatMap,
-        centeredData = a002.heatMap,
-        centeredScaledData = a002n.heatMap,
         covariance = a5.02.covMap,
         correlation = a5.02.correlationMap,
         scree = a01.leScree,
@@ -931,9 +929,6 @@ PCAplot <- function(
         # biplot12 = e.JolieBiplot
     )
     description.graphs <- list(
-        rawData = "The Row Data (Heat Map)",
-        centeredData = "The Centered Data",
-        centeredScaledData = "The Centered and Normalized Data",
         covariance = "The Covariance Matrix Heat Map",
         correlation = "The Correlation Matrix Heat Map",
         scree = "The Eigenvalues Scree Plot",
@@ -952,6 +947,15 @@ PCAplot <- function(
         loadings12.arrow = "Variables: Loadings as Weights  1*2 (with arrows)" #,
         # biplot12 = e.JolieBiplot
     )
+
+    if (ncol(data) < max.n4heat) {
+      results.graphs$rawData = a001.heatMap
+      results.graphs$centeredData = a002.heatMap
+      results.graphs$centeredScaledData = a002n.heatMap
+      description.graphs$rawData = "The Row Data (Heat Map)"
+      description.graphs$centeredData = "The Centered Data"
+      description.graphs$centeredScaledData = "The Centered and Normalized Data"
+    }
 
     if (!is.null(DESIGN)){
         results.graphs$factorScoresI12design = a5.JolieggMap

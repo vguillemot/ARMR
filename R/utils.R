@@ -31,14 +31,24 @@ plotCtr <- function(signed.ctr, col4, nfac = 1,
                     font.size = 5,
                     horizontal = FALSE){
     leTitre <- paste0("Component ",nfac)
+    if (sum(signed.ctr[, nfac] > 0) == nrow(signed.ctr)){
+      ylim <- c(0,
+                1.2*max(signed.ctr[,nfac]))
+    }else if(sum(signed.ctr[, nfac] < 0) == nrow(signed.ctr)){
+      ylim <- c(1.2*min(signed.ctr[,nfac]),
+                0)
+    }else{
+      ylim <- c(1.2*min(signed.ctr[,nfac]),
+                1.2*max(signed.ctr[,nfac]))
+    }
+
     ctr <- PrettyBarPlot2(signed.ctr[, nfac],
                           threshold = 1 / NROW(signed.ctr),
                           font.size = font.size,
                           signifOnly = FALSE,
                           color4bar = col4,
                           ylab = 'Signed Contributions',
-                          ylim = c(1.2*min(signed.ctr[,nfac]),
-                                   1.2*max(signed.ctr[,nfac])),
+                          ylim = ylim,
                           horizontal = horizontal) +
         ggtitle("Contribution Barplots",
                 subtitle = leTitre) +

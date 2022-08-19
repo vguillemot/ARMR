@@ -602,6 +602,7 @@ PCAplot <- function(
         addCoefasPercent	= TRUE,
         # Add coefficient of correlation
         tl.srt = 45,
+        tl.cex = (10/ncol(Smat)),
         number.font = (10/ncol(Smat)),
         #Text label color and rotation
         # Combine with significance
@@ -637,6 +638,7 @@ PCAplot <- function(
         addCoefasPercent	= TRUE,
         # Add coefficient of correlation
         tl.srt = 45,
+        tl.cex = (10/ncol(Rmat)),
         number.font = (10/ncol(Rmat)),
         #Text label color and rotation
         # Combine with significance

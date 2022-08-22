@@ -950,7 +950,7 @@ PCAplot <- function(
         # biplot12 = e.JolieBiplot
     )
 
-    if (ncol(data) < max.n4heat) {
+    if (max(ncol(data), nrow(data)) < max.n4heat) {
       results.graphs$rawData = a001.heatMap
       results.graphs$centeredData = a002.heatMap
       results.graphs$centeredScaledData = a002n.heatMap

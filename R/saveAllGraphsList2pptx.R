@@ -188,7 +188,7 @@ saveAllGraphsInList2pptx <- function(
      titles4list2Save <- names(list2Save)
   }
 
-  # Double check that the list to save containts
+  # Double check that the list to save contains
   # only graphs
     alist <- list2Save
   nObj <- length(alist)

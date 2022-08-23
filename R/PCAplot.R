@@ -596,14 +596,14 @@ PCAplot <- function(
         tl.col = col4J,
         pch.col = col(200),
         type = "upper",
-        order = "hclust",
-        addCoef.col =  "grey",
+        # order = "hclust",
+        addCoef.col =  "black",
         #"black",
-        addCoefasPercent	= TRUE,
+        # addCoefasPercent	= TRUE,
         # Add coefficient of correlation
         tl.srt = 45,
-        tl.cex = (10/ncol(Smat)),
-        number.cex = (10/ncol(Smat)),
+        tl.cex = min((10/ncol(Smat)), 1),
+        number.cex = min((10/ncol(Smat)), 1),
         #Text label color and rotation
         # Combine with significance
         #p.mat = p.mat,
@@ -632,14 +632,14 @@ PCAplot <- function(
         tl.col = col4J,
         pch.col = col(200),
         type = "upper",
-        order = "hclust",
-        addCoef.col =  "grey",
+        # order = "hclust",
+        addCoef.col =  "black",
         #"black",
         addCoefasPercent	= TRUE,
         # Add coefficient of correlation
         tl.srt = 45,
-        tl.cex = (10/ncol(Rmat)),
-        number.cex = (10/ncol(Rmat)),
+        tl.cex = min((10/ncol(Rmat)), 1),
+        number.cex = min((10/ncol(Rmat)), 1),
         #Text label color and rotation
         # Combine with significance
         #p.mat = p.mat,

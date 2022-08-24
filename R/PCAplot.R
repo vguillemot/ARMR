@@ -191,7 +191,7 @@ PCAplot <- function(
     ## 1. Slices of Inertia ----
     loadings.1 <- resPCA$ExPosition.Data$fj
     ## 2. Correlations ----
-    loadings.2 <- t(cor(data, resPCA$ExPosition.Data$fi))
+    loadings.2 <- cor(data, resPCA$ExPosition.Data$fi)
     # Loadings as coefficients
     # of the optimal linear combination
     cor4print <- loadings.2
@@ -663,7 +663,7 @@ PCAplot <- function(
     # Create the map
     jolie.ggplot.J <-
         PTCA4CATA::createFactorMap(
-            t(loadings.2),
+            loadings.2,
             col.points = col4J,
             col.labels = col4J,
             display.labels = display.labels.var,
@@ -684,7 +684,7 @@ PCAplot <- function(
     }
     #  Add some arrows
     arrows <-
-        addArrows(t(loadings.2), color = col4J)
+        addArrows(loadings.2, color = col4J)
     b2.jolieggMap.J <-
         jolie.ggplot.J$zeMap_background +
         jolie.ggplot.J$zeMap_text +
@@ -707,7 +707,7 @@ PCAplot <- function(
         dev.off()
     }
     ## Get ctr as corr
-    corJ_PC <- round(t(loadings.2 ^ 2), 2)
+    corJ_PC <- round(loadings.2 ^ 2, 2)
     colnames(corJ_PC) <-
         paste0('f', 1:ncol(corJ_PC))
 

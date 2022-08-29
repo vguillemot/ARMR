@@ -4,6 +4,8 @@
 #' from [PCAplot()]
 #'
 #' @param results.stats The same \code{results.stats} from \code{PCAplot()}
+#' @param data_pca The data passed to \code{epPCA()}
+#' @param design The design variable passed to \code{epPCA()}
 #' @param file2Save.xlsx File name / path to save the Excel sheet
 #'
 #' @author Luke Moraglia
@@ -11,6 +13,8 @@
 #' @return a list of data written to the Excel sheet, with class \code{"save2xlsx"}.
 #' @export
 savePCAResults2xlsx <- function(results.stats,
+                                data_pca,
+                                design,
                                 file2Save.xlsx = "PCA Results.xlsx"){
 
   ED <- results.stats$ExPosition.Data

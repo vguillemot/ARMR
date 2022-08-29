@@ -4,10 +4,19 @@
 \alias{savePCAResults2xlsx}
 \title{savePCAResults2xlsx}
 \usage{
-savePCAResults2xlsx(results.stats, file2Save.xlsx = "PCA Results.xlsx")
+savePCAResults2xlsx(
+  results.stats,
+  data_pca,
+  design,
+  file2Save.xlsx = "PCA Results.xlsx"
+)
 }
 \arguments{
 \item{results.stats}{The same \code{results.stats} from \code{PCAplot()}}
+
+\item{data_pca}{The data passed to \code{epPCA()}}
+
+\item{design}{The design variable passed to \code{epPCA()}}
 
 \item{file2Save.xlsx}{File name / path to save the Excel sheet}
 }

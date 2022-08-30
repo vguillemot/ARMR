@@ -129,10 +129,11 @@ PCAplotInference <- function(
     ) { # title of pptx
     printTest <- TRUE  # to debug the graphs
     printTest <- FALSE # to debug the graphs
-    data <- ExPosition::expo.scale(
-        data,
-        center = resPCA$ExPosition.Data$center,
-        scale = resPCA$ExPosition.Data$scale)
+    # Don't preprocess to fix bootstrap ratio bug.
+    # data <- ExPosition::expo.scale(
+    #     data,
+    #     center = resPCA$ExPosition.Data$center,
+    #     scale = resPCA$ExPosition.Data$scale)
     # NB use namenameExpositionResults() to have
     # Dimensions named
     if (is.null(col4I)) {
@@ -160,16 +161,16 @@ PCAplotInference <- function(
     # use PTCA4CATA::PlotScree
     ##### Inference and bootstrap
     infres <- epPCA.inference.battery(
-        DATA = data, # data is preprocessed already
-        center = FALSE,
-        scale = FALSE,
+        DATA = data,
+        center = resPCA$ExPosition.Data$center,
+        scale = resPCA$ExPosition.Data$scale,
         DESIGN = DESIGN,
         test.iters = niter.perm,
         graphs = FALSE)
     bootstapped.Eigenvalues <- Boot4Eigs(
         data = data, # data is preprocessed already
-        center = FALSE,
-        scale = FALSE,
+        center = resPCA$ExPosition.Data$center,
+        scale = resPCA$ExPosition.Data$scale,
         design = DESIGN,
         niter = niter.boot,
         CI.perc = c(0.025, 0.975),

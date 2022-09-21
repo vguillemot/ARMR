@@ -1,8 +1,81 @@
+# Work file for CA output ----
+# Created  09/19/2022
+# for package ARMR
+# Current Version 09/21/2022
+# Goal: generates standard graphs and tables for CA
+# Author Luke and Hervé
+# Entête -----
+# install.packages('sinew')
+# sinew::makeOxygen(graph4epPCA)
+# Preamble ----
+# Pass Results from Exposition
+# ExPosition
+#
+# Documentation -----
+#' @title CAplot run a CA
+#' (with the \code{ExPosition} package)
+#' and generates the standard graphs and tables.
+#' Note: *Still Under Development*.
+#' @description Generates the standard graphs and tables for CA.
+#' @param resCA Output from epCA
+#' @param data A data frame or a matrix with
+#' data suitable for a CA.
+#' @param DESIGN  Default: NULL.
+#' A design vector (could be factor or character)
+#' or (Boolean) matrix used to assign rows
+#' to groups.
+#' @param graphs  do we want graphs? At the moment, this parameter is ignored.
+#' Current Default is \code{12} which indicates that
+#' the graphs are generated for the first
+#' 2 components. Note that current version
+#' is creating output only for the first two
+#' components.
+#' @param printGraphs  (Default: FALSE)
+#' do we want to print the graphics as \code{.png}?
+#' @param col4I  a color vector for
+#' plotting the rows (if \code{NULL}
+#' Default) use colors from \code{ExPosition::epCA}.
+#' @param col4J
+#' a color vector for
+#' plotting the columns (if \code{NULL}
+#' Default) use colors from \code{ExPosition::epCA}.
+#' @param show.TI whether to plot the tolerance intervals or not. Default: FALSE
+#' @param show.CI whether to plot the confidence intervals or not. Default: TRUE
+#' @param mean.cex the size of the dots of the means. Default: 3
+#' @param mean.textcex the size of the texts of the means. Default: 3
+#' @param display.labels.ind If TRUE, the labels of rows will be printed. Default: FALSE.
+#' @param display.labels.var If TRUE, the labels of columns will be printed. Default: TRUE.
+#' @param display.points.mean If TRUE, the mean row factor scores will be plotted. Default: TRUE.
+#' @param mean.constraints A list of the constraints (that include \code{minx}, \code{miny}, \code{maxx}, and \code{maxy})
+#' The constraints of the figure that only includes the means. This constraints
+#' will be used if \code{only.mean = TRUE}. Default: NULL
+#' @param scale.mean.constraints A value used to scale the constraints (by multiplication).
+#' This function is used to adjust the constraints when the confidence or the tolerance intervals are outside of the figure.
+#' Default: 1.5
+#' @param max.n4bar When the number of bars exceed this value, the labels will be hidden. Default: 40.
+#' @param save2pptx  Default: FALSE
+#' @param title4pptx Title of the PPTX, Default:
+#' 'CA Results'.
+#' @return A list made of two lists
+#'
+#' @details Work in Progress
+#' @author Luke Moraglia and Hervé Abdi
+#' @seealso
+#'  \code{\link[ExPosition]{epCA}}
+#'  \code{\link[PTCA4CATA]{PlotScree}}, \code{\link[PTCA4CATA]{createFactorMap}}
+#' @export
+#' @import prettyGraphs
+#' @import ggplot2 PTCA4CATA data4PCCAR corrplot
+#' @importFrom ExPosition epCA makeNominalData
+##  @importFrom
+##  @importFrom PTCA4CATA PlotScree createFactorMap createxyLabels.gen
+#' @importFrom grDevices colorRampPalette  dev.off  jpeg png recordPlot
+#' @importFrom stats cor  cov varimax chisq.test
 CAplot <- function(resCA,
                    data,
                    DESIGN = NULL,
-                   make_design_nominal = TRUE,
-                   k = 0,
+                   #make_design_nominal = TRUE,
+                   #k = 0,
                    graphs = 12,
                    printGraphs = FALSE,
                    col4I = NULL,
@@ -21,7 +94,7 @@ CAplot <- function(resCA,
                    title4pptx = "CA Results"){
 
   #Debug graphs
-  printTest <- TRUE
+  printTest <- FALSE
 
   if (is.null(col4I)) {
     if (is.null(DESIGN)){
@@ -39,6 +112,27 @@ CAplot <- function(resCA,
   }else if((is.data.frame(DESIGN)|is.matrix(DESIGN)) && ncol(DESIGN) == 1){
     DESIGN <- as.vector(as.matrix(DESIGN))
   }
+
+  # Heatmap of Pearson residuals
+
+  chi2 <- chisq.test(data)
+  Inertia.cells <- chi2$residuals / sqrt(sum(data))
+  if(nrow(Inertia.cells) > ncol(Inertia.cells)){
+    Inertia.cells <- t(Inertia.cells)
+  }
+  col <-
+    colorRampPalette(c("#BB4444", "#EE9988",
+                       "#FFFFFF", "#77AADD", "#4477AA"))
+
+
+  corrplot::corrplot(Inertia.cells, is.cor = FALSE,
+                     col = col(200),
+                     #method = "color",
+                     tl.col = "black",
+                     tl.srt = 45
+                     )
+  a0.residuals <- recordPlot()
+
 
   # Scree
   scree <- PTCA4CATA::PlotScree(ev = resCA$ExPosition.Data$eigs,
@@ -181,11 +275,11 @@ CAplot <- function(resCA,
       a5.JolieggMap.Fi.TI <- jolie.ggplot1.transparent$zeMap + label4Map2 + fi.TI + plot.fi.mean$zeMap_dots + plot.fi.mean$zeMap_text
       a5.JolieggMap.Fimean.TI <- jolie.ggplot1.transparent$zeMap_background + label4Map2 + fi.TI + plot.fi.mean$zeMap_dots + plot.fi.mean$zeMap_text
       if (printGraphs) {
-        png('ObservationImapWithTI.png')
+        png('RowImapWithTI.png')
         print(a5.JolieggMap.Fi.TI)
         dev.off()
 
-        png('ObservationImapWithTI(MeansOnly).png')
+        png('RowImapWithTI(MeansOnly).png')
         print(a5.JolieggMap.Fimean.TI)
         dev.off()
       }
@@ -194,11 +288,11 @@ CAplot <- function(resCA,
       a5.JolieggMap.Fi.CI <- jolie.ggplot1.transparent$zeMap + label4Map2 + fi.CI + plot.fi.mean$zeMap_dots + plot.fi.mean$zeMap_text
       a5.JolieggMap.Fimean.CI <- jolie.ggplot1.transparent$zeMap_background + label4Map2 + fi.CI + plot.fi.mean$zeMap_dots + plot.fi.mean$zeMap_text
       if (printGraphs) {
-        png('ObservationImapWithCI.png')
+        png('RowImapWithCI.png')
         print(a5.JolieggMap.Fi.CI)
         dev.off()
 
-        png('ObservationImapWithCI(MeansOnly).png')
+        png('RowImapWithCI(MeansOnly).png')
         print(a5.JolieggMap.Fimean.CI)
         dev.off()
       }
@@ -207,11 +301,11 @@ CAplot <- function(resCA,
       a5.JolieggMap.Fi.CITI <- jolie.ggplot1.transparent$zeMap + label4Map2 + fi.TI + fi.CI + plot.fi.mean$zeMap_dots + plot.fi.mean$zeMap_text
       a5.JolieggMap.Fimean.CITI <- jolie.ggplot1.transparent$zeMap_background + label4Map2 + fi.TI + fi.CI + plot.fi.mean$zeMap_dots + plot.fi.mean$zeMap_text
       if (printGraphs) {
-        png('ObservationImapWithCITI.png')
+        png('RowImapWithCITI.png')
         print(a5.JolieggMap.Fi.CITI)
         dev.off()
 
-        png('ObservationImapWithCITI(MeansOnly).png')
+        png('RowImapWithCITI(MeansOnly).png')
         print(a5.JolieggMap.Fimean.CITI)
         dev.off()
       }
@@ -328,6 +422,7 @@ CAplot <- function(resCA,
     # cor and cov mat here
     #covariance = a5.02.covMap,
     #correlation = a5.02.correlationMap,
+    chi2.residuals = a0.residuals,
     scree = a01.leScree,
     ctrI.1 = ctrI1,
     ctrI.2 = ctrI2,
@@ -349,6 +444,7 @@ CAplot <- function(resCA,
   description.graphs <- list(
     #covariance = "The Covariance Matrix Heat Map",
     #correlation = "The Correlation Matrix Heat Map",
+    chi2.residuals = "Chi Square Residuals",
     scree = "The Eigenvalues Scree Plot",
     ctrI.1 = "Rows: Contributions Dimension 1",
     ctrI.2 = "Rows: Contributions Dimension 2",

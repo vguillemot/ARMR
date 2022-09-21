@@ -115,7 +115,7 @@
 #' @export
 #' @import prettyGraphs
 #' @import ggplot2 PTCA4CATA data4PCCAR corrplot
-#' @importFrom ExPosition epPCA
+#' @importFrom ExPosition epPCA makeNominalData
 ##  @importFrom
 ##  @importFrom PTCA4CATA PlotScree createFactorMap createxyLabels.gen
 #' @importFrom grDevices colorRampPalette  dev.off  jpeg png recordPlot

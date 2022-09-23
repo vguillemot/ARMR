@@ -336,18 +336,9 @@ CAplot <- function(resCA,
     print(b3.jolieggMap.J.fj)
   }
 
-  joint.ggplot <- PTCA4CATA::createFactorMapIJ(
-    Fi, Fj,
-    col.points.i = col4I,
-    col.labels.i = col4I,
-    col.points.j = col4J,
-    col.labels.j = col4J,
-    constraints = constraintsIJ,
-    font.face.i = "italic")
-
   joint.map <-
-    joint.ggplot$baseMap + joint.ggplot$I_points + joint.ggplot$I_labels +
-    joint.ggplot$J_points + joint.ggplot$J_labels + label4Map2
+    jolie.ggplot1$zeMap + jolie.ggplot.J.fj$zeMap_dots + jolie.ggplot.J.fj$zeMap_text +
+    label4Map2
 
   if(printTest){
     print(joint.map)

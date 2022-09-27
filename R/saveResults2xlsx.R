@@ -43,6 +43,50 @@ savePCAResults2xlsx <- function(results.stats,
 
 }
 
+#' saveCAResults2xlsx
+#'
+#' Save an Excel Spreadsheet based on the \code{results.stats}
+#' from [CAplot()]
+#'
+#' @param results.stats The same \code{results.stats} from \code{CAplot()}
+#' @param data_ca The data passed to \code{epCA()}
+#' @param design The design variable passed to \code{epCA()}
+#' @param file2Save.xlsx File name / path to save the Excel sheet
+#'
+#' @author Luke Moraglia
+#'
+#' @return a list of data written to the Excel sheet, with class \code{"save2xlsx"}.
+#' @export
+saveCAResults2xlsx <- function(results.stats,
+                                data_ca,
+                                design = NULL,
+                                file2Save.xlsx = "CA Results.xlsx"){
+
+  ED <- results.stats$ExPosition.Data
+
+  eigs_tbl <- cbind("Eigenvalues" = ED$eigs, "Percent Inertia" = ED$t)
+
+  list_of_data <- list("CA Input Data" = as.data.frame(data_ca),
+                       "Row Factor Scores" = as.data.frame(ED$fi),
+                       "Row Signed Contributions" = as.data.frame(ED$ci * sign(ED$fi)),
+                       "Column Factor Scores" = as.data.frame(ED$fj),
+                       "Column Signed Contributions" = as.data.frame(ED$cj * sign(ED$fj)),
+                       "Eigenvalues" = as.data.frame(eigs_tbl)
+  )
+  if(!is.null(design)){
+    list_of_data <- append(list_of_data, list("Design Variable" = as.data.frame(design)), 1)
+  }
+
+
+  list_to_write <- lapply(list_of_data, function(x) cbind(" " = rownames(x), x))
+
+  res_saveResultsList2xlsx <- saveResultsList2xlsx(list_to_write,
+                                                   file2Save.xlsx)
+
+  return(res_saveResultsList2xlsx)
+
+
+}
 
 #' saveResultsList2xlsx
 #'

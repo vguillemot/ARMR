@@ -42,3 +42,7 @@ res_caplot_asym_des <- CAplot(resCA.asym, X, DESIGN = design,
                           display.labels.ind = TRUE, save2pptx = TRUE,
                           show.CI = TRUE, show.TI = TRUE,
                           title4pptx = "CA Results Asymmetric Design")
+
+
+excel_output <- saveCAResults2xlsx(res_caplot_sym$results.stats, X, NULL, "CA Results Symmetric.xlsx")
+excel_output2 <- saveCAResults2xlsx(res_caplot_sym_des$results.stats, X, design, "CA Results Symmetric Design.xlsx")

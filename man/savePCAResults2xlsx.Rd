@@ -7,7 +7,7 @@
 savePCAResults2xlsx(
   results.stats,
   data_pca,
-  design,
+  design = NULL,
   file2Save.xlsx = "PCA Results.xlsx"
 )
 }

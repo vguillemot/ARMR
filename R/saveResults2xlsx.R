@@ -14,7 +14,7 @@
 #' @export
 savePCAResults2xlsx <- function(results.stats,
                                 data_pca,
-                                design,
+                                design = NULL,
                                 file2Save.xlsx = "PCA Results.xlsx"){
 
   ED <- results.stats$ExPosition.Data
@@ -22,7 +22,6 @@ savePCAResults2xlsx <- function(results.stats,
   eigs_tbl <- cbind("Eigenvalues" = ED$eigs, "Percent Inertia" = ED$t)
 
   list_of_data <- list("PCA Input Data" = as.data.frame(data_pca),
-                       "Design Variable" = as.data.frame(design),
                        "Obs Factor Scores" = as.data.frame(ED$fi),
                        "Obs Signed Contributions" = as.data.frame(ED$ci * sign(ED$fi)),
                        "Var Loadings as Inertia" = as.data.frame(results.stats$loadings.as.inertia),
@@ -31,6 +30,9 @@ savePCAResults2xlsx <- function(results.stats,
                        "Var Signed Contributions" = as.data.frame(ED$cj * sign(ED$fj)),
                        "Eigenvalues" = as.data.frame(eigs_tbl)
   )
+  if(!is.null(design)){
+    list_of_data <- append(list_of_data, list("Design Variable" = as.data.frame(design)), 1)
+  }
 
 
   list_to_write <- lapply(list_of_data, function(x) cbind(" " = rownames(x), x))

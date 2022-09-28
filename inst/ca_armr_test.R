@@ -46,3 +46,7 @@ res_caplot_asym_des <- CAplot(resCA.asym, X, DESIGN = design,
 
 excel_output <- saveCAResults2xlsx(res_caplot_sym$results.stats, X, NULL, "CA Results Symmetric.xlsx")
 excel_output2 <- saveCAResults2xlsx(res_caplot_sym_des$results.stats, X, design, "CA Results Symmetric Design.xlsx")
+
+
+res_caplot_sym_inf <- CAplotInference(resCA.sym, X, fast = TRUE,
+                                      save2pptx = TRUE, title4pptx = "CA Inference Symmetric.xlsx")

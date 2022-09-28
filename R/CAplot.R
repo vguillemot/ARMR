@@ -316,7 +316,94 @@ CAplot <- function(resCA,
 
   }
 
+  ### I-Cosines -----
+  cos4I <- sqrt(resCA$ExPosition.Data$ri) *
+    sign(resCA$ExPosition.Data$fi)
+  ### 1.Iset - Circle of corr ----
+  jolie.ggplot.I <-
+    PTCA4CATA::createFactorMap(
+      cos4I,
+      col.points = col4I,
+      col.labels = col4I,
+      display.labels = display.labels.ind,
+      constraints = list(
+        minx = -1,
+        miny = -1,
+        maxx = 1 ,
+        maxy = 1
+      ),
+      font.face = "italic"
+    )
+  # draw the circle
+  a01.jolieggMap.I <- jolie.ggplot.I$zeMap +
+    addCircleOfCor(color = "darkorchid4")
+  if (printGraphs) {
+    print(a01.jolieggMap.I)
+  }
+  #  Dot for the I-set, no arrows
+  a02.jolieggMap.I <-
+    jolie.ggplot.I$zeMap_background +
+    jolie.ggplot.I$zeMap_text +
+    addCircleOfCor(color = "darkorchid4") +
+    jolie.ggplot.I$zeMap_dots  + label4Map2
+  if (printTest) {
+    print(a02.jolieggMap.I)
+  }
+  if (printGraphs) {
+    png('CircleOfCorrISet.png')
+    print(a02.jolieggMap.I)
+    dev.off()
+  }
 
+  ### J-Cosines -----
+  cos4J <- sqrt(resCA$ExPosition.Data$rj) *
+    sign(resCA$ExPosition.Data$fj)
+
+  jolie.ggplot.J <-
+    PTCA4CATA::createFactorMap(
+      cos4J,
+      col.points = col4J,
+      col.labels = col4J,
+      display.labels = display.labels.var,
+      constraints = list(
+        minx = -1,
+        miny = -1,
+        maxx = 1 ,
+        maxy = 1
+      )
+    )
+  # draw the circle
+  b1.jolieggMap.J <- jolie.ggplot.J$zeMap +
+    addCircleOfCor(color = "darkorchid4") + label4Map2
+  if (printGraphs) {
+    png('J-CircleOfCorr_noArrow.png')
+    print(b1.jolieggMap.J)
+    dev.off()
+  }
+  #  Add some arrows
+  # arrows <-
+  #   addArrows(loadings.2, color = col4J)
+  # b2.jolieggMap.J <-
+  #   jolie.ggplot.J$zeMap_background +
+  #   jolie.ggplot.J$zeMap_text +
+  #   addCircleOfCor(color = "darkorchid4") +
+  #   arrows + label4Map2
+  # # print(b2.jolieggMap.J)
+  # if (printGraphs) {
+  #   png('J-CircleOfCorr.png')
+  #   print(b2.jolieggMap.J)
+  #   dev.off()
+  # }
+  ## I & J Circle -----
+  b2.jolieggMap.IJ <- b1.jolieggMap.J +
+    jolie.ggplot.I$zeMap_text +
+    jolie.ggplot.I$zeMap_dots + label4Map2
+  #print(b2.jolieggMap.IJ)
+  if (printGraphs) {
+    png('IJ-CircleOfCorr.png')
+    print(b2.jolieggMap.IJ)
+    dev.off()
+  }
 
   # Fj factor map
 
@@ -420,12 +507,12 @@ CAplot <- function(resCA,
     factorScoresI12 = a4.JolieggMap.2,
     factorScoresJ12 = b3.jolieggMap.J.fj,
     #factorScoresJ12.arrow = b3.jolieggMap.J.fj.arrow,
-    #cosineCircle4I12 = a02.jolieggMap.I,
-    #cosineCircleJ12  =  b1.jolieggMap.J,
+    cosineCircle4I12 = a02.jolieggMap.I,
+    cosineCircleJ12  =  b1.jolieggMap.J,
     ctrJ.1 = ctrJ1,
     ctrJ.2 = ctrJ2,
     #cosineCircleArrowJ12  =  b2.jolieggMap.J,
-    #cosineCircleArrowIJ12 = b2.jolieggMap.IJ,
+    cosineCircleIJ12 = b2.jolieggMap.IJ,
     #loadings12 = b3.jolieggMap.J.Q,
     #loadings12.arrow = b3.jolieggMap.J.Q.arrow #,
     # biplot12 = e.JolieBiplot
@@ -442,12 +529,12 @@ CAplot <- function(resCA,
     factorScoresI12 =  "Rows: Factor Scores 1*2",
     factorScoresJ12 = "Columns: Factor Scores 1*2",
     #factorScoresJ12.arrow = "Variables: Loadings as Inertia 1*2 (with arrows)",
-    #cosineCircle4I12 = "Observations: Cosine Circle 1*2",
-    #cosineCircleJ12  = "Variables: Correlation Circle 1*2",
+    cosineCircle4I12 = "Rows: Cosine Circle 1*2",
+    cosineCircleJ12  = "Columns: Cosine Circle 1*2",
     ctrJ.1 = "Columns: Contributions Dimension 1",
     ctrJ.2 = "Columns: Contributions Dimension 2",
     #cosineCircleArrowJ12  =  "Variables: Correlation Circle 1*2 (with arrows)",
-    #cosineCircleArrowIJ12 = "Variables & Observations: Correlation Circle 1*2",
+    cosineCircleIJ12 = "Rows and Columns: Cosine Circle 1*2",
     #loadings12 = "Variables: Loadings as Weights  1*2",
     #loadings12.arrow = "Variables: Loadings as Weights  1*2 (with arrows)" #,
     biplot12 = "Row and Column Biplot: Factor Scores 1*2"

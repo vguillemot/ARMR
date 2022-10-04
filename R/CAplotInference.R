@@ -120,7 +120,7 @@ CAplotInference <- function(
 
     p.ev <- infres.J$Inference.Data$components$p.vals
     BR.I <- infres.I$Inference.Data$fj.boots$tests$boot.ratios
-    BR.J <- infres.I$Inference.Data$fj.boots$tests$boot.ratios
+    BR.J <- infres.J$Inference.Data$fj.boots$tests$boot.ratios
   }
 
   ## Scree

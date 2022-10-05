@@ -408,9 +408,9 @@ PCAplot <- function(
     ### Contributions ----
     signed.ctrI <- resPCA$ExPosition.Data$ci *
         sign(resPCA$ExPosition.Data$fi)
-    if (!is.null(DESIGN)){
-      signed.ctrI <- signed.ctrI[order(DESIGN),]
-    }
+    # if (!is.null(DESIGN)){
+    #   signed.ctrI <- signed.ctrI[order(DESIGN),]
+    # }
     ### ctr4I -----
     leStem <-  'I-Set'
     nfac  <- 1
